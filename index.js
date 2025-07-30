@@ -8,14 +8,35 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+// Allow CORS for localhost + Vercel
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://your-frontend.vercel.app"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
+}));
+
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB error:", err));
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("✅ MongoDB connected"))
+.catch((err) => console.error("❌ MongoDB error:", err));
 
-// Register user
+// =================== ROUTES =================== //
+
+// Register a new player
 app.post("/api/register", async (req, res) => {
   const { name, department, email } = req.body;
   try {
@@ -27,7 +48,7 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
-// Submit answer
+// Submit an answer
 app.post("/api/submit-answer", async (req, res) => {
   const { playerId, questionId, isCorrect } = req.body;
   try {
@@ -58,4 +79,7 @@ app.get("/api/leaderboard", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// =================== START =================== //
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
