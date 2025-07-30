@@ -1,16 +1,22 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const AnswerSchema = new mongoose.Schema({
-  questionId: String,
-  isCorrect: Boolean,
-});
-
-const PlayerSchema = new mongoose.Schema({
+const playerSchema = new mongoose.Schema({
   name: String,
   department: String,
   email: String,
-  answers: [AnswerSchema],
-  createdAt: { type: Date, default: Date.now }
+  score: Number,
+  totalQuestions: Number,
+  answers: [
+    {
+      question: String,
+      selected: String,
+      correct: Boolean,
+    },
+  ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-export default mongoose.model("Player", PlayerSchema);
+module.exports = mongoose.model("Player", playerSchema);
