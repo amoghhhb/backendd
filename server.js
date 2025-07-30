@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import Player from './models/Player.js';
-import QuizResult from './models/QuizResult.js';
+import QuizResult from './models/QuizResults.js';
 
 dotenv.config();
 const app = express();
