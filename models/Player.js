@@ -1,16 +1,13 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const playerSchema = new mongoose.Schema({
   name: String,
   department: String,
   email: String,
-  score: Number,
-  totalQuestions: Number,
   answers: [
     {
-      question: String,
-      selected: String,
-      correct: Boolean,
+      questionId: String,
+      isCorrect: Boolean,
     },
   ],
   createdAt: {
@@ -19,4 +16,5 @@ const playerSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Player", playerSchema);
+const Player = mongoose.model("Player", playerSchema);
+export default Player;
