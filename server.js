@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://mcq-leaderboard.vercel.app', 'http://127.0.0.1:5500'],
+  origin: ['http://localhost:5173', 'https://mcq-leaderboard.vercel.app', 'http://127.0.0.1:5500', 'https://webverse-mcq.vercel.app'],
 }));
 app.use(express.json());
 
